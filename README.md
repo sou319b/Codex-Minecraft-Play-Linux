@@ -4,6 +4,8 @@ A local MCP server that lets Codex see and control Minecraft on Ubuntu/GNOME Way
 
 Supports screenshots, movement, clicks, key combinations, scrolling, and short action sequences. Runs as your desktop user; no API key is required by the server.
 
+Inspired by [Codex-Minecraft-Gameplay](https://github.com/wz1119/Codex-Minecraft-Gameplay) by [wz1119](https://github.com/wz1119).
+
 ## Setup
 
 Requires Ubuntu/GNOME Wayland, Python 3.10+, and a logged-in desktop session. Other desktop environments are untested.
