@@ -1,0 +1,7 @@
+# Add this table to your existing Codex config; do not replace the entire file.
+# Replace /absolute/path with your clone's actual absolute path.
+[mcp_servers.linux-computer-use]
+command = "/usr/bin/python3"
+args = ["/absolute/path/Codex-Minecraft-Play-Linux/server.py", "serve"]
+startup_timeout_sec = 10
+tool_timeout_sec = 60
