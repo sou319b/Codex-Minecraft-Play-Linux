@@ -192,6 +192,8 @@ class SequenceTests(unittest.TestCase):
         self.assertEqual(report['input_completed_steps'], 1)
         self.assertEqual(len(desktop.actions), 1)
         self.assertEqual(png, frame(size=(99, 60)))
+        self.assertEqual(report['final_capture_metadata']['screenshot_size'], [99, 60])
+        self.assertEqual(report['final_capture_metadata']['capture_source'], 'window')
 
     def test_capture_mapping_change_stops_coordinate_action(self):
         class MappingDesktop(FakeDesktop):
@@ -219,6 +221,7 @@ class SequenceTests(unittest.TestCase):
         self.assertEqual(len(desktop.actions), 1)
         self.assertIn('capture failure', report['error'])
         self.assertFalse(report['final_capture_fresh'])
+        self.assertEqual(report['final_capture_metadata']['screenshot_size'], [100, 60])
 
     def test_initial_capture_failure_returns_no_image_without_input(self):
         class FailingCapture(FakeDesktop):
@@ -229,6 +232,65 @@ class SequenceTests(unittest.TestCase):
         self.assertIsNone(png)
         self.assertEqual(report['status'], 'stopped')
         self.assertFalse(desktop.actions)
+        self.assertIsNone(report['final_capture_metadata'])
+
+    def test_expired_budget_does_not_start_post_action_capture(self):
+        now = [0]
+
+        class SlowAction(FakeDesktop):
+            def act(self, **kwargs):
+                now[0] = 1.00001
+                return super().act(**kwargs)
+
+        desktop = SlowAction()
+        with patch('sequence.time.monotonic', side_effect=lambda: now[0]):
+            png, report = execute(desktop, [{'keys': ['w']}, {'keys': ['e']}],
+                                  max_seconds=1)
+        self.assertEqual(desktop.captures, 1)
+        self.assertEqual(len(desktop.actions), 1)
+        self.assertEqual(report['input_completed_steps'], 1)
+        self.assertEqual(report['completed_steps'], 0)
+        self.assertFalse(report['final_capture_fresh'])
+        self.assertIn('budget', report['capture_skipped'])
+        self.assertTrue(report['budget_exceeded'])
+        self.assertEqual(png, frame())
+
+    def test_expired_budget_does_not_start_failure_recovery_capture(self):
+        now = [0]
+
+        class SlowFailure(FakeDesktop):
+            def act(self, **kwargs):
+                now[0] = 1.1
+                return super().act(**kwargs)
+
+        desktop = SlowFailure(fail_at=0)
+        with patch('sequence.time.monotonic', side_effect=lambda: now[0]):
+            _, report = execute(desktop, [{'keys': ['w']}], max_seconds=1)
+        self.assertEqual(desktop.captures, 1)
+        self.assertFalse(report['final_capture_fresh'])
+        self.assertIn('input failure', report['error'])
+        self.assertIn('budget', report['capture_skipped'])
+        self.assertTrue(report['budget_exceeded'])
+
+    def test_capture_started_before_deadline_can_finish_after_it(self):
+        now = [0]
+
+        class SlowCapture(FakeDesktop):
+            def screenshot(self, **kwargs):
+                if self.captures:
+                    now[0] = 1.1
+                return super().screenshot(**kwargs)
+
+        desktop = SlowCapture([frame(), frame('white')])
+        with patch('sequence.time.monotonic', side_effect=lambda: now[0]):
+            png, report = execute(desktop, [{'keys': ['w']}, {'keys': ['e']}],
+                                  max_seconds=1)
+        self.assertEqual(desktop.captures, 2)
+        self.assertEqual(len(desktop.actions), 1)
+        self.assertEqual(png, frame('white'))
+        self.assertTrue(report['final_capture_fresh'])
+        self.assertTrue(report['budget_exceeded'])
+        self.assertNotIn('capture_skipped', report)
 
     def test_budget_prediction_stops_before_action(self):
         desktop = FakeDesktop()

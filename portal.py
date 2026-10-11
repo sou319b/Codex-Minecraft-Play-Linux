@@ -176,6 +176,11 @@ class Desktop:
 
     def probe(self, source='window'):
         """Exercise session setup without presenting a sharing dialog or input."""
+        if source not in ('window', 'monitor'):
+            raise ValueError('source must be window or monitor')
+        self._pump()
+        if self.session:
+            raise RuntimeError('A desktop session is already connected')
         try:
             self._create()
             self._select(source)
@@ -289,7 +294,8 @@ class Desktop:
                 'pointer_allowed': bool(self.devices & 2),
                 'logical_size': self.logical_size,
                 'screenshot_size': self.image_size,
-                'absolute_pointer_available': bool(self.logical_size and self.image_size),
+                'absolute_pointer_available': bool(self.session and self.devices & 2
+                                                   and self.logical_size and self.image_size),
                 'focus_verified': False,
                 'capture_fps': 5,
                 'stop_file': str(self.stop_path) if self.stop_path else None,
@@ -448,12 +454,16 @@ class Desktop:
                 self._notify('NotifyPointerButton', dbus.Int32(code), dbus.UInt32(1), device=2)
             # Spread camera motion across frames rather than one potentially lost event.
             count = max(1, math.ceil(duration / 0.02)) if dx or dy else 1
-            for _ in range(count):
+            motion_started = time.monotonic()
+            for index in range(count):
                 self._guard_input()
                 if dx or dy:
                     self._notify('NotifyPointerMotion', dbus.Double(dx / count),
                                  dbus.Double(dy / count), device=2)
-                self._sleep(duration / count)
+                # Portal calls are synchronous. Include their time in each slot
+                # instead of adding their latency to every movement interval.
+                target = motion_started + duration * (index + 1) / count
+                self._sleep(max(0, target - time.monotonic()))
             self._guard_input()
         finally:
             try:
@@ -530,14 +540,15 @@ class Desktop:
                 pass
 
     def close(self):
-        for code in list(self.pressed_keys):
-            try:
-                self._release_key(code)
-            except Exception:
-                pass
+        # Preserve modifier-click semantics during emergency/disconnect cleanup.
         for code in list(self.pressed_buttons):
             try:
                 self._release_button(code)
+            except Exception:
+                pass
+        for code in list(self.pressed_keys):
+            try:
+                self._release_key(code)
             except Exception:
                 pass
         if self.session:

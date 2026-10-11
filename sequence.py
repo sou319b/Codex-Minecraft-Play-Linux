@@ -131,10 +131,13 @@ def execute(desktop, steps, stable_regions=None, max_seconds=15, max_width=1280,
     Static validation errors raise ValueError before any input. Operational
     errors stop the sequence and return the latest available image (possibly
     None when initial capture fails). Capture time counts against the budget,
-    though a capture already in flight can finish after the deadline. Failed
-    actions get one final observation if still connected; failed captures are
-    never retried. ``final_capture_fresh`` records whether the returned image
-    was captured after the latest attempted input.
+    though a capture already in flight can finish after the deadline. No new
+    capture starts after the deadline; ``capture_skipped`` explains when this
+    prevents an observation. Failed actions get one final observation if still
+    connected and within budget; failed captures are never retried.
+    ``final_capture_fresh`` records whether the returned image was captured
+    after the latest attempted input. ``final_capture_metadata`` describes
+    that image, including its actual dimensions even after a mapping change.
     """
     plan, stable = _plan(steps, stable_regions, max_seconds, max_width, max_mean_error)
     coordinate_plan = any('x' in action for action, _ in plan)
@@ -142,25 +145,11 @@ def execute(desktop, steps, stable_regions=None, max_seconds=15, max_width=1280,
     started = time.monotonic()
     report = {'status': 'stopped', 'completed_steps': 0, 'input_completed_steps': 0,
               'stopped_at': None, 'error': None, 'steps': [],
-              'final_capture_fresh': False}
+              'final_capture_fresh': False, 'final_capture_metadata': None}
     png = None
     index = None
     baseline = baseline_meta = None
     action_failed = False
-
-    def capture():
-        nonlocal png
-        value, meta = desktop.screenshot(max_width=max_width)
-        current = _image(value)
-        png = value
-        report['final_capture_fresh'] = True
-        if baseline is not None:
-            if current.size != baseline.size:
-                raise RuntimeError('Screenshot dimensions changed; sequence stopped')
-            for field in ('stream', 'capture_source', 'logical_size'):
-                if meta.get(field) != baseline_meta.get(field):
-                    raise RuntimeError(f'Capture mapping changed ({field}); sequence stopped')
-        return current, meta
 
     def budget(action=None):
         remaining = max_seconds - (time.monotonic() - started)
@@ -168,6 +157,26 @@ def execute(desktop, steps, stable_regions=None, max_seconds=15, max_width=1280,
                   (.03 if 'x' in action else 0))
         if remaining <= 0 or needed > remaining:
             raise RuntimeError('Sequence wall-time budget exhausted')
+
+    def capture():
+        nonlocal png
+        try:
+            budget()
+        except RuntimeError as exc:
+            report['capture_skipped'] = str(exc)
+            raise
+        value, meta = desktop.screenshot(max_width=max_width)
+        current = _image(value)
+        png = value
+        report['final_capture_fresh'] = True
+        report['final_capture_metadata'] = {**meta, 'screenshot_size': list(current.size)}
+        if baseline is not None:
+            if current.size != baseline.size:
+                raise RuntimeError('Screenshot dimensions changed; sequence stopped')
+            for field in ('stream', 'capture_source', 'logical_size'):
+                if meta.get(field) != baseline_meta.get(field):
+                    raise RuntimeError(f'Capture mapping changed ({field}); sequence stopped')
+        return current, meta
 
     try:
         baseline, baseline_meta = capture()
@@ -239,7 +248,9 @@ def execute(desktop, steps, stable_regions=None, max_seconds=15, max_width=1280,
             try:
                 capture()
             except Exception as exc:
-                report['capture_error'] = str(exc)
-        report['elapsed_seconds'] = round(time.monotonic() - started, 4)
-        report['budget_exceeded'] = report['elapsed_seconds'] > max_seconds
+                if 'capture_skipped' not in report:
+                    report['capture_error'] = str(exc)
+        elapsed = time.monotonic() - started
+        report['elapsed_seconds'] = round(elapsed, 4)
+        report['budget_exceeded'] = elapsed > max_seconds
     return png, report
