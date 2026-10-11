@@ -1,0 +1,1381 @@
+{
+  "date": "2026-10-11",
+  "timezone": "Asia/Tokyo",
+  "scope": "Local code review, deterministic fake-portal tests, existing static-image logs, and human-approved Minecraft 1.21.6 window smoke test. Not a repeated gameplay success benchmark.",
+  "environment": {
+    "session_type": "wayland",
+    "desktop": "ubuntu:GNOME",
+    "gstreamer": "1.28.2",
+    "remote_desktop_portal_version": 2,
+    "screen_cast_portal_version": 5,
+    "capture_source": "window",
+    "capture_fps": 5,
+    "screenshot_size": [
+      1280,
+      720
+    ]
+  },
+  "tests": {
+    "linux_computer_use_before": 55,
+    "linux_computer_use_after": 71,
+    "mcbench": 37,
+    "all_passed": true
+  },
+  "live": {
+    "transport": "Workspace Server.handle via local desktop diagnostic driver; normal MCP connection could not access session bus in sandbox.",
+    "timing_scope": "Server-side tool call wall time, excluding model decisions, client tool transport and image inspection.",
+    "statistics": {
+      "standalone_capture_seconds": {
+        "n": 7,
+        "min": 0.1648,
+        "median": 0.2002,
+        "max": 0.3254
+      },
+      "act_server_wall_seconds": {
+        "n": 11,
+        "min": 0.3209,
+        "median": 0.5741,
+        "max": 0.8493
+      },
+      "act_capture_seconds": {
+        "n": 11,
+        "min": 0.1178,
+        "median": 0.2683,
+        "max": 0.3371
+      },
+      "camera_act_indices": [
+        16,
+        17
+      ]
+    },
+    "observed": [
+      "Menu click eventually opened world selection; first click only highlighted the button.",
+      "Two coordinate steps completed with stable menu-region checks.",
+      "Relative camera motion changed view; inverse motion returned toward original view.",
+      "Short Shift+W and Shift+S changed viewpoint without visible health loss.",
+      "E opened inventory; a two-key sequence closed it and paused.",
+      "Saved and returned to title screen, then disconnected."
+    ],
+    "limitations": [
+      "Single session, different action durations and menu/game scenes: timing distribution is descriptive only.",
+      "No mining, crafting or navigation success-rate trial.",
+      "Position and orientation were not measured or restored exactly.",
+      "Minecraft remains maximized: restore-size click rejected by automatic approval review as potentially closing game; safer disconnect used.",
+      "Initial session had no input grants; user-approved reconnection granted keyboard and pointer."
+    ],
+    "records": [
+      {
+        "index": 1,
+        "tool": "linux_desktop_connect",
+        "arguments": {
+          "source": "window"
+        },
+        "wall_seconds": 24.8949,
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "metadata": {
+                "connected": true,
+                "stream": 78,
+                "capture_source": "window",
+                "keyboard_allowed": false,
+                "pointer_allowed": false,
+                "logical_size": [
+                  1920,
+                  1080
+                ],
+                "screenshot_size": null,
+                "absolute_pointer_available": false,
+                "focus_verified": false,
+                "capture_fps": 5,
+                "stop_file": "/tmp/linux-computer-use-1000/stop",
+                "input_target": "currently focused application on the desktop"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 2,
+        "tool": "linux_desktop_screenshot",
+        "arguments": {
+          "max_width": 1280
+        },
+        "wall_seconds": 0.1664,
+        "response": {
+          "content": [
+            {
+              "type": "image",
+              "mimeType": "image/png",
+              "png_sha256": "d363ad898680ac24ef5636eaf8cf43f260628aa23647e22a48de2d52304a93b2",
+              "png_bytes": 216531
+            },
+            {
+              "type": "text",
+              "metadata": {
+                "connected": true,
+                "stream": 78,
+                "capture_source": "window",
+                "keyboard_allowed": false,
+                "pointer_allowed": false,
+                "logical_size": [
+                  1920,
+                  1080
+                ],
+                "screenshot_size": [
+                  1280,
+                  720
+                ],
+                "absolute_pointer_available": true,
+                "focus_verified": false,
+                "capture_fps": 5,
+                "stop_file": "/tmp/linux-computer-use-1000/stop",
+                "input_target": "currently focused application on the desktop"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 3,
+        "tool": "linux_desktop_screenshot",
+        "arguments": {
+          "max_width": 1280
+        },
+        "wall_seconds": 0.2002,
+        "response": {
+          "content": [
+            {
+              "type": "image",
+              "mimeType": "image/png",
+              "png_sha256": "2eb41175590c9a55bdcba9cafb6e7219489fdd7f334a5b498f12ac5ee9ec3428",
+              "png_bytes": 219547
+            },
+            {
+              "type": "text",
+              "metadata": {
+                "connected": true,
+                "stream": 78,
+                "capture_source": "window",
+                "keyboard_allowed": false,
+                "pointer_allowed": false,
+                "logical_size": [
+                  1920,
+                  1080
+                ],
+                "screenshot_size": [
+                  1280,
+                  720
+                ],
+                "absolute_pointer_available": true,
+                "focus_verified": false,
+                "capture_fps": 5,
+                "stop_file": "/tmp/linux-computer-use-1000/stop",
+                "input_target": "currently focused application on the desktop"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 4,
+        "tool": "linux_desktop_screenshot",
+        "arguments": {
+          "max_width": 1280
+        },
+        "wall_seconds": 0.1648,
+        "response": {
+          "content": [
+            {
+              "type": "image",
+              "mimeType": "image/png",
+              "png_sha256": "427633fbdde2c6c4c5ffa4bbda5576a0cea4a3c9cfd6a8a0f3cc098dbfea2139",
+              "png_bytes": 219930
+            },
+            {
+              "type": "text",
+              "metadata": {
+                "connected": true,
+                "stream": 78,
+                "capture_source": "window",
+                "keyboard_allowed": false,
+                "pointer_allowed": false,
+                "logical_size": [
+                  1920,
+                  1080
+                ],
+                "screenshot_size": [
+                  1280,
+                  720
+                ],
+                "absolute_pointer_available": true,
+                "focus_verified": false,
+                "capture_fps": 5,
+                "stop_file": "/tmp/linux-computer-use-1000/stop",
+                "input_target": "currently focused application on the desktop"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 5,
+        "tool": "linux_desktop_screenshot",
+        "arguments": {
+          "max_width": 1280
+        },
+        "wall_seconds": 0.2078,
+        "response": {
+          "content": [
+            {
+              "type": "image",
+              "mimeType": "image/png",
+              "png_sha256": "b8ef47150b9043c63f2fca1715b72d4ded63e20ea29be07aed732b13aa1b0f2a",
+              "png_bytes": 220195
+            },
+            {
+              "type": "text",
+              "metadata": {
+                "connected": true,
+                "stream": 78,
+                "capture_source": "window",
+                "keyboard_allowed": false,
+                "pointer_allowed": false,
+                "logical_size": [
+                  1920,
+                  1080
+                ],
+                "screenshot_size": [
+                  1280,
+                  720
+                ],
+                "absolute_pointer_available": true,
+                "focus_verified": false,
+                "capture_fps": 5,
+                "stop_file": "/tmp/linux-computer-use-1000/stop",
+                "input_target": "currently focused application on the desktop"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 6,
+        "tool": "linux_desktop_disconnect",
+        "arguments": {},
+        "wall_seconds": 0.0236,
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "metadata": {
+                "connected": false,
+                "stream": null,
+                "capture_source": null,
+                "keyboard_allowed": false,
+                "pointer_allowed": false,
+                "logical_size": null,
+                "screenshot_size": null,
+                "absolute_pointer_available": false,
+                "focus_verified": false,
+                "capture_fps": 5,
+                "stop_file": "/tmp/linux-computer-use-1000/stop",
+                "input_target": "currently focused application on the desktop"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 7,
+        "tool": "linux_desktop_connect",
+        "arguments": {
+          "source": "window"
+        },
+        "wall_seconds": 5.4745,
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "metadata": {
+                "connected": true,
+                "stream": 79,
+                "capture_source": "window",
+                "keyboard_allowed": true,
+                "pointer_allowed": true,
+                "logical_size": [
+                  1920,
+                  1080
+                ],
+                "screenshot_size": null,
+                "absolute_pointer_available": false,
+                "focus_verified": false,
+                "capture_fps": 5,
+                "stop_file": "/tmp/linux-computer-use-1000/stop",
+                "input_target": "currently focused application on the desktop"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 8,
+        "tool": "linux_desktop_screenshot",
+        "arguments": {
+          "max_width": 1280
+        },
+        "wall_seconds": 0.2259,
+        "response": {
+          "content": [
+            {
+              "type": "image",
+              "mimeType": "image/png",
+              "png_sha256": "e1d3335dacf24de0601650641522c504b7fe5587d15662250b4f2adf85a094c9",
+              "png_bytes": 281053
+            },
+            {
+              "type": "text",
+              "metadata": {
+                "connected": true,
+                "stream": 79,
+                "capture_source": "window",
+                "keyboard_allowed": true,
+                "pointer_allowed": true,
+                "logical_size": [
+                  1920,
+                  1080
+                ],
+                "screenshot_size": [
+                  1280,
+                  720
+                ],
+                "absolute_pointer_available": true,
+                "focus_verified": false,
+                "capture_fps": 5,
+                "stop_file": "/tmp/linux-computer-use-1000/stop",
+                "input_target": "currently focused application on the desktop"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 9,
+        "tool": "linux_desktop_act",
+        "arguments": {
+          "x": 300,
+          "y": 199,
+          "buttons": [
+            "left"
+          ],
+          "duration": 0.06,
+          "settle": 0.15,
+          "max_width": 1280
+        },
+        "wall_seconds": 0.3643,
+        "response": {
+          "isError": false,
+          "content": [
+            {
+              "type": "image",
+              "mimeType": "image/png",
+              "png_sha256": "887b3a9e27da0e3021352480f0db56c71cb9236c8dac930880147d4407d3a4ac",
+              "png_bytes": 274087
+            },
+            {
+              "type": "text",
+              "metadata": {
+                "connected": true,
+                "stream": 79,
+                "capture_source": "window",
+                "keyboard_allowed": true,
+                "pointer_allowed": true,
+                "logical_size": [
+                  1920,
+                  1080
+                ],
+                "screenshot_size": [
+                  1280,
+                  720
+                ],
+                "absolute_pointer_available": true,
+                "focus_verified": false,
+                "capture_fps": 5,
+                "stop_file": "/tmp/linux-computer-use-1000/stop",
+                "input_target": "currently focused application on the desktop",
+                "input_completed": true,
+                "elapsed_seconds": 0.2424,
+                "capture_fresh": true,
+                "timings": {
+                  "action_seconds": 0.2425,
+                  "capture_seconds": 0.121,
+                  "total_seconds": 0.3635
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 10,
+        "tool": "linux_desktop_act",
+        "arguments": {
+          "x": 300,
+          "y": 199,
+          "buttons": [
+            "left"
+          ],
+          "duration": 0.08,
+          "settle": 0.3,
+          "max_width": 1280
+        },
+        "wall_seconds": 0.7012,
+        "response": {
+          "isError": false,
+          "content": [
+            {
+              "type": "image",
+              "mimeType": "image/png",
+              "png_sha256": "342c12a0c59f04ff01491a6fe4a482635c533a5b3e8785a0a11a2ab7c949d064",
+              "png_bytes": 158518
+            },
+            {
+              "type": "text",
+              "metadata": {
+                "connected": true,
+                "stream": 79,
+                "capture_source": "window",
+                "keyboard_allowed": true,
+                "pointer_allowed": true,
+                "logical_size": [
+                  1920,
+                  1080
+                ],
+                "screenshot_size": [
+                  1280,
+                  720
+                ],
+                "absolute_pointer_available": true,
+                "focus_verified": false,
+                "capture_fps": 5,
+                "stop_file": "/tmp/linux-computer-use-1000/stop",
+                "input_target": "currently focused application on the desktop",
+                "input_completed": true,
+                "elapsed_seconds": 0.4167,
+                "capture_fresh": true,
+                "timings": {
+                  "action_seconds": 0.4168,
+                  "capture_seconds": 0.2838,
+                  "total_seconds": 0.7006
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 11,
+        "tool": "linux_desktop_sequence",
+        "arguments": {
+          "steps": [
+            {
+              "x": 241,
+              "y": 175,
+              "buttons": [
+                "left"
+              ],
+              "duration": 0.08,
+              "settle": 0.15
+            },
+            {
+              "x": 195,
+              "y": 305,
+              "buttons": [
+                "left"
+              ],
+              "duration": 0.08,
+              "settle": 0.5
+            }
+          ],
+          "stable_regions": [
+            [
+              410,
+              327,
+              505,
+              347
+            ]
+          ],
+          "max_seconds": 5,
+          "max_width": 1280
+        },
+        "wall_seconds": 2.4751,
+        "response": {
+          "content": [
+            {
+              "type": "image",
+              "mimeType": "image/png",
+              "png_sha256": "ac3400ea722ffbc70087a8757b4b548844fed64bd77adc1918b241d8cf871751",
+              "png_bytes": 122431
+            },
+            {
+              "type": "text",
+              "metadata": {
+                "status": "completed",
+                "completed_steps": 2,
+                "input_completed_steps": 2,
+                "stopped_at": null,
+                "error": null,
+                "steps": [
+                  {
+                    "index": 0,
+                    "input_completed": true,
+                    "progress_success": null,
+                    "stable_region_errors": [
+                      0.0
+                    ],
+                    "action_metadata": {
+                      "connected": true,
+                      "stream": 79,
+                      "capture_source": "window",
+                      "keyboard_allowed": true,
+                      "pointer_allowed": true,
+                      "logical_size": [
+                        1920,
+                        1080
+                      ],
+                      "screenshot_size": [
+                        1280,
+                        720
+                      ],
+                      "absolute_pointer_available": true,
+                      "focus_verified": false,
+                      "capture_fps": 5,
+                      "stop_file": "/tmp/linux-computer-use-1000/stop",
+                      "input_target": "currently focused application on the desktop",
+                      "input_completed": true,
+                      "elapsed_seconds": 0.2623
+                    }
+                  },
+                  {
+                    "index": 1,
+                    "input_completed": true,
+                    "progress_success": null,
+                    "stable_region_errors": [
+                      0.0005263157894736842
+                    ],
+                    "action_metadata": {
+                      "connected": true,
+                      "stream": 79,
+                      "capture_source": "window",
+                      "keyboard_allowed": true,
+                      "pointer_allowed": true,
+                      "logical_size": [
+                        1920,
+                        1080
+                      ],
+                      "screenshot_size": [
+                        1280,
+                        720
+                      ],
+                      "absolute_pointer_available": true,
+                      "focus_verified": false,
+                      "capture_fps": 5,
+                      "stop_file": "/tmp/linux-computer-use-1000/stop",
+                      "input_target": "currently focused application on the desktop",
+                      "input_completed": true,
+                      "elapsed_seconds": 0.6152
+                    }
+                  }
+                ],
+                "final_capture_fresh": true,
+                "final_capture_metadata": {
+                  "connected": true,
+                  "stream": 79,
+                  "capture_source": "window",
+                  "keyboard_allowed": true,
+                  "pointer_allowed": true,
+                  "logical_size": [
+                    1920,
+                    1080
+                  ],
+                  "screenshot_size": [
+                    1280,
+                    720
+                  ],
+                  "absolute_pointer_available": true,
+                  "focus_verified": false,
+                  "capture_fps": 5,
+                  "stop_file": "/tmp/linux-computer-use-1000/stop",
+                  "input_target": "currently focused application on the desktop"
+                },
+                "elapsed_seconds": 2.4728,
+                "budget_exceeded": false
+              }
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "index": 12,
+        "tool": "linux_desktop_screenshot",
+        "arguments": {
+          "max_width": 1280
+        },
+        "wall_seconds": 0.1802,
+        "response": {
+          "content": [
+            {
+              "type": "image",
+              "mimeType": "image/png",
+              "png_sha256": "057490eda6ec937ba62db0f07fa69fdc860c791e07364b688d52b61f86b0f137",
+              "png_bytes": 140966
+            },
+            {
+              "type": "text",
+              "metadata": {
+                "connected": true,
+                "stream": 79,
+                "capture_source": "window",
+                "keyboard_allowed": true,
+                "pointer_allowed": true,
+                "logical_size": [
+                  1920,
+                  1080
+                ],
+                "screenshot_size": [
+                  1280,
+                  720
+                ],
+                "absolute_pointer_available": true,
+                "focus_verified": false,
+                "capture_fps": 5,
+                "stop_file": "/tmp/linux-computer-use-1000/stop",
+                "input_target": "currently focused application on the desktop"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 13,
+        "tool": "linux_desktop_act",
+        "arguments": {
+          "keys": [
+            "escape"
+          ],
+          "duration": 0.05,
+          "settle": 0.2,
+          "max_width": 1280
+        },
+        "wall_seconds": 0.5746,
+        "response": {
+          "isError": false,
+          "content": [
+            {
+              "type": "image",
+              "mimeType": "image/png",
+              "png_sha256": "89c6d7c91efd7a36e71929b4e8ead81da6651122f480511943fd80d11f29b928",
+              "png_bytes": 131917
+            },
+            {
+              "type": "text",
+              "metadata": {
+                "connected": true,
+                "stream": 79,
+                "capture_source": "window",
+                "keyboard_allowed": true,
+                "pointer_allowed": true,
+                "logical_size": [
+                  1920,
+                  1080
+                ],
+                "screenshot_size": [
+                  1280,
+                  720
+                ],
+                "absolute_pointer_available": true,
+                "focus_verified": false,
+                "capture_fps": 5,
+                "stop_file": "/tmp/linux-computer-use-1000/stop",
+                "input_target": "currently focused application on the desktop",
+                "input_completed": true,
+                "elapsed_seconds": 0.2518,
+                "capture_fresh": true,
+                "timings": {
+                  "action_seconds": 0.2519,
+                  "capture_seconds": 0.3222,
+                  "total_seconds": 0.5741
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 14,
+        "tool": "linux_desktop_act",
+        "arguments": {
+          "x": 551,
+          "y": 28,
+          "buttons": [
+            "left"
+          ],
+          "duration": 0.08,
+          "settle": 0.3,
+          "max_width": 1280
+        },
+        "wall_seconds": 0.6538,
+        "response": {
+          "isError": false,
+          "content": [
+            {
+              "type": "image",
+              "mimeType": "image/png",
+              "png_sha256": "096ca6651feb61a1afe10ecd3044f9aba2a9c98a2b94cecd60d39e96f0c5c61d",
+              "png_bytes": 348891
+            },
+            {
+              "type": "text",
+              "metadata": {
+                "connected": true,
+                "stream": 79,
+                "capture_source": "window",
+                "keyboard_allowed": true,
+                "pointer_allowed": true,
+                "logical_size": [
+                  1920,
+                  1080
+                ],
+                "screenshot_size": [
+                  1280,
+                  720
+                ],
+                "absolute_pointer_available": true,
+                "focus_verified": false,
+                "capture_fps": 5,
+                "stop_file": "/tmp/linux-computer-use-1000/stop",
+                "input_target": "currently focused application on the desktop",
+                "input_completed": true,
+                "elapsed_seconds": 0.4125,
+                "capture_fresh": true,
+                "timings": {
+                  "action_seconds": 0.4125,
+                  "capture_seconds": 0.2403,
+                  "total_seconds": 0.6528
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 15,
+        "tool": "linux_desktop_act",
+        "arguments": {
+          "keys": [
+            "escape"
+          ],
+          "duration": 0.05,
+          "settle": 0.15,
+          "max_width": 1280
+        },
+        "wall_seconds": 0.5398,
+        "response": {
+          "isError": false,
+          "content": [
+            {
+              "type": "image",
+              "mimeType": "image/png",
+              "png_sha256": "47600239892535ee6be1c10e6d93cad9bb3dff7b1fe088318cea2153f90b0414",
+              "png_bytes": 338629
+            },
+            {
+              "type": "text",
+              "metadata": {
+                "connected": true,
+                "stream": 79,
+                "capture_source": "window",
+                "keyboard_allowed": true,
+                "pointer_allowed": true,
+                "logical_size": [
+                  1920,
+                  1080
+                ],
+                "screenshot_size": [
+                  1280,
+                  720
+                ],
+                "absolute_pointer_available": true,
+                "focus_verified": false,
+                "capture_fps": 5,
+                "stop_file": "/tmp/linux-computer-use-1000/stop",
+                "input_target": "currently focused application on the desktop",
+                "input_completed": true,
+                "elapsed_seconds": 0.2016,
+                "capture_fresh": true,
+                "timings": {
+                  "action_seconds": 0.2017,
+                  "capture_seconds": 0.3371,
+                  "total_seconds": 0.5388
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 16,
+        "tool": "linux_desktop_act",
+        "arguments": {
+          "dx": 40,
+          "dy": -20,
+          "duration": 0.2,
+          "settle": 0.15,
+          "max_width": 1280
+        },
+        "wall_seconds": 0.6573,
+        "response": {
+          "isError": false,
+          "content": [
+            {
+              "type": "image",
+              "mimeType": "image/png",
+              "png_sha256": "39830ca23b1b59cd227de44bdf0822bd0247cc89bade310c89c7e44ee35fc71e",
+              "png_bytes": 321611
+            },
+            {
+              "type": "text",
+              "metadata": {
+                "connected": true,
+                "stream": 79,
+                "capture_source": "window",
+                "keyboard_allowed": true,
+                "pointer_allowed": true,
+                "logical_size": [
+                  1920,
+                  1080
+                ],
+                "screenshot_size": [
+                  1280,
+                  720
+                ],
+                "absolute_pointer_available": true,
+                "focus_verified": false,
+                "capture_fps": 5,
+                "stop_file": "/tmp/linux-computer-use-1000/stop",
+                "input_target": "currently focused application on the desktop",
+                "input_completed": true,
+                "elapsed_seconds": 0.3504,
+                "capture_fresh": true,
+                "timings": {
+                  "action_seconds": 0.3505,
+                  "capture_seconds": 0.3059,
+                  "total_seconds": 0.6564
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 17,
+        "tool": "linux_desktop_act",
+        "arguments": {
+          "dx": -40,
+          "dy": 20,
+          "duration": 0.2,
+          "settle": 0.15,
+          "max_width": 1280
+        },
+        "wall_seconds": 0.5624,
+        "response": {
+          "isError": false,
+          "content": [
+            {
+              "type": "image",
+              "mimeType": "image/png",
+              "png_sha256": "2a9bed08edeb4930a3e36acd73370a1875fe66b5cd1f6a7691cfd22c74150a25",
+              "png_bytes": 325392
+            },
+            {
+              "type": "text",
+              "metadata": {
+                "connected": true,
+                "stream": 79,
+                "capture_source": "window",
+                "keyboard_allowed": true,
+                "pointer_allowed": true,
+                "logical_size": [
+                  1920,
+                  1080
+                ],
+                "screenshot_size": [
+                  1280,
+                  720
+                ],
+                "absolute_pointer_available": true,
+                "focus_verified": false,
+                "capture_fps": 5,
+                "stop_file": "/tmp/linux-computer-use-1000/stop",
+                "input_target": "currently focused application on the desktop",
+                "input_completed": true,
+                "elapsed_seconds": 0.3504,
+                "capture_fresh": true,
+                "timings": {
+                  "action_seconds": 0.3505,
+                  "capture_seconds": 0.211,
+                  "total_seconds": 0.5615
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 18,
+        "tool": "linux_desktop_act",
+        "arguments": {
+          "keys": [
+            "shift",
+            "w"
+          ],
+          "duration": 0.15,
+          "settle": 0.15,
+          "max_width": 1280
+        },
+        "wall_seconds": 0.4954,
+        "response": {
+          "isError": false,
+          "content": [
+            {
+              "type": "image",
+              "mimeType": "image/png",
+              "png_sha256": "66b492b106ee21d94fda924c8f30ae25fd86311ce9ee2b3cee4b8814cfd1ef87",
+              "png_bytes": 300587
+            },
+            {
+              "type": "text",
+              "metadata": {
+                "connected": true,
+                "stream": 79,
+                "capture_source": "window",
+                "keyboard_allowed": true,
+                "pointer_allowed": true,
+                "logical_size": [
+                  1920,
+                  1080
+                ],
+                "screenshot_size": [
+                  1280,
+                  720
+                ],
+                "absolute_pointer_available": true,
+                "focus_verified": false,
+                "capture_fps": 5,
+                "stop_file": "/tmp/linux-computer-use-1000/stop",
+                "input_target": "currently focused application on the desktop",
+                "input_completed": true,
+                "elapsed_seconds": 0.3044,
+                "capture_fresh": true,
+                "timings": {
+                  "action_seconds": 0.3045,
+                  "capture_seconds": 0.1896,
+                  "total_seconds": 0.4941
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 19,
+        "tool": "linux_desktop_act",
+        "arguments": {
+          "keys": [
+            "shift",
+            "s"
+          ],
+          "duration": 0.15,
+          "settle": 0.15,
+          "max_width": 1280
+        },
+        "wall_seconds": 0.5741,
+        "response": {
+          "isError": false,
+          "content": [
+            {
+              "type": "image",
+              "mimeType": "image/png",
+              "png_sha256": "13089475c611de3ad996061915ffd241aba13196b93e5cb849ee685d5ad58706",
+              "png_bytes": 289863
+            },
+            {
+              "type": "text",
+              "metadata": {
+                "connected": true,
+                "stream": 79,
+                "capture_source": "window",
+                "keyboard_allowed": true,
+                "pointer_allowed": true,
+                "logical_size": [
+                  1920,
+                  1080
+                ],
+                "screenshot_size": [
+                  1280,
+                  720
+                ],
+                "absolute_pointer_available": true,
+                "focus_verified": false,
+                "capture_fps": 5,
+                "stop_file": "/tmp/linux-computer-use-1000/stop",
+                "input_target": "currently focused application on the desktop",
+                "input_completed": true,
+                "elapsed_seconds": 0.3047,
+                "capture_fresh": true,
+                "timings": {
+                  "action_seconds": 0.3048,
+                  "capture_seconds": 0.2683,
+                  "total_seconds": 0.5731
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 20,
+        "tool": "linux_desktop_act",
+        "arguments": {
+          "keys": [
+            "e"
+          ],
+          "duration": 0.05,
+          "settle": 0.15,
+          "max_width": 1280
+        },
+        "wall_seconds": 0.3209,
+        "response": {
+          "isError": false,
+          "content": [
+            {
+              "type": "image",
+              "mimeType": "image/png",
+              "png_sha256": "bd6d59cd2d90edb7bc479599d425e838bccee634fd4a1e4e35136825199da293",
+              "png_bytes": 122092
+            },
+            {
+              "type": "text",
+              "metadata": {
+                "connected": true,
+                "stream": 79,
+                "capture_source": "window",
+                "keyboard_allowed": true,
+                "pointer_allowed": true,
+                "logical_size": [
+                  1920,
+                  1080
+                ],
+                "screenshot_size": [
+                  1280,
+                  720
+                ],
+                "absolute_pointer_available": true,
+                "focus_verified": false,
+                "capture_fps": 5,
+                "stop_file": "/tmp/linux-computer-use-1000/stop",
+                "input_target": "currently focused application on the desktop",
+                "input_completed": true,
+                "elapsed_seconds": 0.2026,
+                "capture_fresh": true,
+                "timings": {
+                  "action_seconds": 0.2026,
+                  "capture_seconds": 0.1178,
+                  "total_seconds": 0.3205
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 21,
+        "tool": "linux_desktop_sequence",
+        "arguments": {
+          "steps": [
+            {
+              "keys": [
+                "e"
+              ],
+              "duration": 0.05,
+              "settle": 0.15
+            },
+            {
+              "keys": [
+                "escape"
+              ],
+              "duration": 0.05,
+              "settle": 0.15
+            }
+          ],
+          "max_seconds": 3,
+          "max_width": 1280
+        },
+        "wall_seconds": 1.0656,
+        "response": {
+          "content": [
+            {
+              "type": "image",
+              "mimeType": "image/png",
+              "png_sha256": "ccb776c9ed4902323c66729a9d0276c14e3d52235402de75ed980b9fa9fcadfd",
+              "png_bytes": 255565
+            },
+            {
+              "type": "text",
+              "metadata": {
+                "status": "completed",
+                "completed_steps": 2,
+                "input_completed_steps": 2,
+                "stopped_at": null,
+                "error": null,
+                "steps": [
+                  {
+                    "index": 0,
+                    "input_completed": true,
+                    "progress_success": null,
+                    "action_metadata": {
+                      "connected": true,
+                      "stream": 79,
+                      "capture_source": "window",
+                      "keyboard_allowed": true,
+                      "pointer_allowed": true,
+                      "logical_size": [
+                        1920,
+                        1080
+                      ],
+                      "screenshot_size": [
+                        1280,
+                        720
+                      ],
+                      "absolute_pointer_available": true,
+                      "focus_verified": false,
+                      "capture_fps": 5,
+                      "stop_file": "/tmp/linux-computer-use-1000/stop",
+                      "input_target": "currently focused application on the desktop",
+                      "input_completed": true,
+                      "elapsed_seconds": 0.2018
+                    }
+                  },
+                  {
+                    "index": 1,
+                    "input_completed": true,
+                    "progress_success": null,
+                    "action_metadata": {
+                      "connected": true,
+                      "stream": 79,
+                      "capture_source": "window",
+                      "keyboard_allowed": true,
+                      "pointer_allowed": true,
+                      "logical_size": [
+                        1920,
+                        1080
+                      ],
+                      "screenshot_size": [
+                        1280,
+                        720
+                      ],
+                      "absolute_pointer_available": true,
+                      "focus_verified": false,
+                      "capture_fps": 5,
+                      "stop_file": "/tmp/linux-computer-use-1000/stop",
+                      "input_target": "currently focused application on the desktop",
+                      "input_completed": true,
+                      "elapsed_seconds": 0.2019
+                    }
+                  }
+                ],
+                "final_capture_fresh": true,
+                "final_capture_metadata": {
+                  "connected": true,
+                  "stream": 79,
+                  "capture_source": "window",
+                  "keyboard_allowed": true,
+                  "pointer_allowed": true,
+                  "logical_size": [
+                    1920,
+                    1080
+                  ],
+                  "screenshot_size": [
+                    1280,
+                    720
+                  ],
+                  "absolute_pointer_available": true,
+                  "focus_verified": false,
+                  "capture_fps": 5,
+                  "stop_file": "/tmp/linux-computer-use-1000/stop",
+                  "input_target": "currently focused application on the desktop"
+                },
+                "elapsed_seconds": 1.0638,
+                "budget_exceeded": false
+              }
+            }
+          ],
+          "isError": false
+        }
+      },
+      {
+        "index": 22,
+        "tool": "linux_desktop_act",
+        "arguments": {
+          "x": 620,
+          "y": 496,
+          "buttons": [
+            "left"
+          ],
+          "duration": 0.08,
+          "settle": 0.4,
+          "max_width": 1280
+        },
+        "wall_seconds": 0.8493,
+        "response": {
+          "isError": false,
+          "content": [
+            {
+              "type": "image",
+              "mimeType": "image/png",
+              "png_sha256": "beec143f9ab4170d4ddc0abc6fa52a266394c7bc7e5b3a2d9c27b4619f0bb867",
+              "png_bytes": 433202
+            },
+            {
+              "type": "text",
+              "metadata": {
+                "connected": true,
+                "stream": 79,
+                "capture_source": "window",
+                "keyboard_allowed": true,
+                "pointer_allowed": true,
+                "logical_size": [
+                  1920,
+                  1080
+                ],
+                "screenshot_size": [
+                  1280,
+                  720
+                ],
+                "absolute_pointer_available": true,
+                "focus_verified": false,
+                "capture_fps": 5,
+                "stop_file": "/tmp/linux-computer-use-1000/stop",
+                "input_target": "currently focused application on the desktop",
+                "input_completed": true,
+                "elapsed_seconds": 0.5164,
+                "capture_fresh": true,
+                "timings": {
+                  "action_seconds": 0.5165,
+                  "capture_seconds": 0.3311,
+                  "total_seconds": 0.8475
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 23,
+        "tool": "linux_desktop_screenshot",
+        "arguments": {
+          "max_width": 1280
+        },
+        "wall_seconds": 0.3254,
+        "response": {
+          "content": [
+            {
+              "type": "image",
+              "mimeType": "image/png",
+              "png_sha256": "0b1721c660715bc8de5a7c0e22082fe279641d9486eacc2e68d838ae0a5384e7",
+              "png_bytes": 686384
+            },
+            {
+              "type": "text",
+              "metadata": {
+                "connected": true,
+                "stream": 79,
+                "capture_source": "window",
+                "keyboard_allowed": true,
+                "pointer_allowed": true,
+                "logical_size": [
+                  1920,
+                  1080
+                ],
+                "screenshot_size": [
+                  1280,
+                  720
+                ],
+                "absolute_pointer_available": true,
+                "focus_verified": false,
+                "capture_fps": 5,
+                "stop_file": "/tmp/linux-computer-use-1000/stop",
+                "input_target": "currently focused application on the desktop"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 24,
+        "tool": "linux_desktop_disconnect",
+        "arguments": {},
+        "wall_seconds": 0.0246,
+        "response": {
+          "content": [
+            {
+              "type": "text",
+              "metadata": {
+                "connected": false,
+                "stream": null,
+                "capture_source": null,
+                "keyboard_allowed": false,
+                "pointer_allowed": false,
+                "logical_size": null,
+                "screenshot_size": null,
+                "absolute_pointer_available": false,
+                "focus_verified": false,
+                "capture_fps": 5,
+                "stop_file": "/tmp/linux-computer-use-1000/stop",
+                "input_target": "currently focused application on the desktop"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "synthetic_rpc_latency": {
+    "method": "Fake monotonic clock and fake portal; keys=w, dx=100, duration=1, settle=0. Values are held-key durations, not live measurements.",
+    "rows": [
+      {
+        "notification_delay_ms": 1,
+        "before_seconds": 1.051,
+        "after_seconds": 1.001
+      },
+      {
+        "notification_delay_ms": 5,
+        "before_seconds": 1.255,
+        "after_seconds": 1.005
+      },
+      {
+        "notification_delay_ms": 10,
+        "before_seconds": 1.51,
+        "after_seconds": 1.01
+      }
+    ],
+    "limitation": "Synchronous calls slower than the movement slot can still exceed duration."
+  },
+  "source_hashes": {
+    "server.py": "186956c6dbfc57289949548c9364d5bbd3949c7276f39313c3796550c7422fe9",
+    "portal.py": "b4d791bf9a04d6a96366694709f85dd298cfcedd38be225f607b01c33f813916",
+    "sequence.py": "1dbc2566deed2ee53d0a5b7ab439bc4c272a08364022ce47eb47dabe1e3b5bf1"
+  }
+}

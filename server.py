@@ -8,6 +8,7 @@ import os
 import select
 import signal
 import sys
+import time
 from pathlib import Path
 
 from portal import CompletedInputError, Desktop, image_content, screenshot_width, stop_input
@@ -54,7 +55,9 @@ TOOLS = [
     tool('act', 'Perform a short combined action, release all inputs, settle, and return '
          'a fresh screenshot. Supports Shift+click and walking+mining. Camera motion '
          'is spread over duration; align before mining. x,y use the latest screenshot '
-         'and are for visibly open menus. Observe before acting; focus is NOT verified.',
+         'and are for visibly open menus. Returns action/capture timing; interrupted '
+         'input may be partial, so inspect the result before retrying. Observe before '
+         'acting; focus is NOT verified.',
          {**ACTION, 'max_width': WIDTH}),
     tool('sequence', 'Run 1-16 previously inspected steps with fresh screenshots and '
          'a wall-clock budget (default 15s, max 30s). Coordinate steps REQUIRE '
@@ -107,22 +110,42 @@ class Server:
         if action == 'act':
             kwargs = dict(args)
             width = screenshot_width(kwargs.pop('max_width', 1280))
+            # Reject invalid plans before entering the possibly-partial-input path.
+            self.desktop.validate_action(**kwargs)
+            started = time.monotonic()
             action_error = None
             try:
                 value = self.desktop.act(**kwargs)
-            except CompletedInputError as exc:
+            except Exception as exc:
                 action_error = str(exc)
-                value = {'input_completed': True, 'action_error': action_error,
-                         'warning': 'Input completed; inspect the image before continuing. Do not replay automatically.'}
+                value = {'input_completed': isinstance(exc, CompletedInputError),
+                         'input_may_have_occurred': True, 'action_error': action_error,
+                         'warning': 'Input may have changed the desktop; inspect a fresh screenshot before continuing. Do not replay automatically.'}
+            action_finished = time.monotonic()
+            capture_started = action_finished
+
+            def timings():
+                finished = time.monotonic()
+                return {'action_seconds': round(action_finished - started, 4),
+                        'capture_seconds': round(finished - capture_started, 4),
+                        'total_seconds': round(finished - started, 4)}
+
+            if action_error is not None and not self.desktop.session:
+                return {'isError': True, 'content': [{'type': 'text', 'text': json.dumps({
+                    **value, 'capture_fresh': False, 'capture_skipped': 'disconnected',
+                    'timings': timings()})}]}
             try:
                 png, meta = self.desktop.screenshot(max_width=width)
             except Exception as exc:
                 return {'isError': True, 'content': [{'type': 'text', 'text': json.dumps({
                     **value, 'capture_fresh': False, 'capture_error': str(exc),
-                    'warning': 'Input completed; inspect a fresh screenshot before continuing. Do not replay automatically.'})}]}
+                    'timings': timings(),
+                    'warning': 'Input may have changed the desktop; inspect a fresh screenshot before continuing. Do not replay automatically.'})}]}
+            measured = timings()
             return {'isError': action_error is not None,
                     'content': [image_content(png), {'type': 'text',
-                    'text': json.dumps({**value, **meta, 'capture_fresh': True})}]}
+                    'text': json.dumps({**value, **meta, 'capture_fresh': True,
+                                        'timings': measured})}]}
         if action == 'sequence':
             png, report = execute(self.desktop, **args)
             content = [image_content(png)] if png is not None else []
@@ -152,7 +175,7 @@ class Server:
                 supported = ('2024-11-05', '2025-03-26', '2025-06-18', '2025-11-25')
                 result = {'protocolVersion': requested if requested in supported else '2025-06-18',
                           'capabilities': {'tools': {}},
-                          'serverInfo': {'name': 'linux-computer-use', 'version': '0.3.1'},
+                          'serverInfo': {'name': 'linux-computer-use', 'version': '0.3.2'},
                           'instructions': 'Use only for the human-authorized desktop task. '
                           'Connect defaults to a single window; the human selects it in '
                           'Ubuntu sharing approval. Never substitute monitor capture '
